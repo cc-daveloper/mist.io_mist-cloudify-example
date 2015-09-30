@@ -1,0 +1,17 @@
+
+node_types:
+
+
+  ###########################################################
+  # We define a type that inherits openstack's default
+  # server, and adds monitoring capabillities on top of it.
+  ###########################################################
+  nodecellar.nodes.MonitoredServerKey:
+    derived_from: cloudify.mist.nodes.KeyPair
+ 
+  nodecellar.nodes.MonitoredServer:
+    derived_from: cloudify.mist.nodes.Server
+    properties:
+      install_agent:
+        default: false
+   
