@@ -17,9 +17,10 @@ The first thing you'll need to do is
 [install the Cloudify CLI](http://getcloudify.org/guide/3.1/installation-cli.html).
 <br>
 This will let you run the various blueprints.
+This plugin needs [an account on mist.io](https://mist.io/).
 
 **Note: <br>Documentation about the blueprints content is located inside the blueprint files themselves.
-<br>Presented here are only instructions on how to RUN the blueprints using the Cloudify CLI with Mist plugin .**
+<br>Presented here are only instructions on how to RUN the blueprints using the Cloudify CLI with Mist.io plugin .**
 <br><br>
 **From now on, all commands will assume that the working directory is the root of this repository.**
 
@@ -28,12 +29,15 @@ This will let you run the various blueprints.
 `. env/bin/activate` </br>
 `pip install dev-requirements.txt` </br>
 
+
 ## Step 1: Initialize
 
 [This blueprint](mist-blueprint.yaml) allows you to install the nodecellar application on a mist machine using the mist run_script mist client function. <br>
+You need to add a cloud on mist.io account.Click "ADD CLOUD" ![alt tag](http://d33v4339jhl8k0.cloudfront.net/docs/assets/555c5984e4b01a224b425242/images/5605257f903360177092e035/file-ysREVMYhF4.png) and 
+
 Let see how this is done:
 
-### Blueprint using Mist Client
+### Blueprint using Mist Script runnner
 
 `cfy local init -p mist-blueprint.yaml -i inputs/mist.yaml` <br>
 
