@@ -24,9 +24,9 @@ This will let you run the various blueprints.
 **From now on, all commands will assume that the working directory is the root of this repository.**
 
 ## Install dependencies
-`virtualenv env`
-`. env/bin/activate`
-`pip install dev-requirements.txt`
+`virtualenv env` </br>
+`. env/bin/activate` </br>
+`pip install dev-requirements.txt` </br>
 
 ## Step 1: Initialize
 
