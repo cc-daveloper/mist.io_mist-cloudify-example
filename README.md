@@ -27,13 +27,13 @@ This plugin needs [an account on mist.io](https://mist.io/).
 ## Install dependencies
 `virtualenv env` </br>
 `. env/bin/activate` </br>
-`pip install dev-requirements.txt` </br>
+`pip install -r dev-requirements.txt` </br>
 
 
 ## Step 1: Initialize
 
 [This blueprint](mist-blueprint.yaml) allows you to install the nodecellar application on a mist machine using the mist run_script mist client function. <br>
-You need to add a cloud on mist.io account.Click "ADD CLOUD" ![alt tag](http://d33v4339jhl8k0.cloudfront.net/docs/assets/555c5984e4b01a224b425242/images/5605257f903360177092e035/file-ysREVMYhF4.png) and 
+You need to add a cloud on mist.io account.Click "ADD CLOUD" ![alt tag](http://d33v4339jhl8k0.cloudfront.net/docs/assets/555c5984e4b01a224b425242/images/5605257f903360177092e035/file-ysREVMYhF4.png) 
 
 Let see how this is done:
 
