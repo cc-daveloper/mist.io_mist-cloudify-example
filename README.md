@@ -38,7 +38,7 @@ The nodecellar scripts are made for ubuntu image and has been tested with AWS se
 Check the blueprint file inputs section and fill
 the [mist input](inputs/mist.yaml) file with the necessary information.
 
-There are two blueprints. The [mist-blueprint](mist-blueprint.yaml file uses the mist.io service to run the scripts on the machine so the user can read the logs be notified about operation success.
+There are two blueprints. The [mist-blueprint](mist-blueprint.yaml) file uses the mist.io service to run the scripts on the machine so the user can read the logs be notified about operation success.
 The [mistfabric-blueprint](mistfabric-blueprint.yaml) file uses the cloudify fabric plugin to run the scripts:
 
 ### Blueprint using Mist Script runnner
