@@ -31,8 +31,10 @@ This plugin needs [an account on mist.io](https://mist.io/).
 ## Step 1: Initialize
  
 
-You need to add a cloud on mist.io account.Click "ADD CLOUD" ![alt tag](http://d33v4339jhl8k0.cloudfront.net/docs/assets/555c5984e4b01a224b425242/images/5605257f903360177092e035/file-ysREVMYhF4.png)
+You need to add a cloud on mist.io account.Click "ADD CLOUD" </br>
+![alt tag](http://d33v4339jhl8k0.cloudfront.net/docs/assets/555c5984e4b01a224b425242/images/5605257f903360177092e035/file-ysREVMYhF4.png)
 
+</br>
 The nodecellar scripts are made for ubuntu image and has been tested with AWS service.
 
 Check the blueprint file inputs section and fill
