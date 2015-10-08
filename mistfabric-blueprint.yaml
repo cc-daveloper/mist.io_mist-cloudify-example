@@ -22,50 +22,51 @@ imports:
 #####################################################################################
 
 inputs:
-
-    ssh_user:
-        description: The ssh user on the machine
-        default: ''
-    private_key_path:
-        description: The local path where private key is saved
-        default: ''
-    username:
-        description: Mist.io username
-        default: ''
-    password:
-        description: Mist.io password
-        default: ''
-    key_name:
-        description: The name of the private key
-        default: ''
-    backend_id:
-        description: The mist.io backend id
-        default: ''
-    image_id:
-        description: The image id
-        default: ''
-    size_id:
-        description: The size id
-        default: ''
-    location_id:
-        description: The location id
-        default: ''
-    monitoring:
-        description: Enable mist monitoring
-        default: false
-    name:
-        description: The machine name
-        default: ''
-    key_external_resource:
-        description: External resource for key
-        default: false
-    node_external_resource:
-        description: External resource for machine 
-        default: false  
-    node_external_resource_id:
-        description: Instance id for machine
-        default: ''
-
+  ssh_user:
+    description: The ssh user on the machine
+    default: ''
+  private_key_path:
+    description: The local path where private key is saved
+    default: ''
+  username:
+    description: Mist.io username
+    default: ''
+  password:
+    description: Mist.io password
+    default: ''
+  key_name:
+    description: The name of the private key
+    default: ''
+  backend_id:
+    description: The mist.io backend id
+    default: ''
+  image_id:
+    description: The image id
+    default: ''
+  size_id:
+    description: The size id
+    default: ''
+  location_id:
+    description: The location id
+    default: ''
+  monitoring:
+    description: Enable mist monitoring
+    default: false
+  name:
+    description: The machine name
+    default: ''
+  key_external_resource:
+    description: External resource for key
+    default: false
+  node_external_resource:
+    description: External resource for machine
+    default: false
+  node_external_resource_id:
+    description: Instance id for machine
+    default: ''
+  networks:
+    description: The network ids that will be used by the machine
+    default: []
 
 
 node_templates:
@@ -163,6 +164,7 @@ node_templates:
         location_id: { get_input: location_id }
         name: { get_input: name } 
         monitoring: { get_input: monitoring }
+        networks: {get_input: networks}
       mist_config:
         username: { get_input: username }
         password: { get_input: password }

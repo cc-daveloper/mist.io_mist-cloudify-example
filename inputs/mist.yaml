@@ -12,3 +12,4 @@ name: CloudifyMist
 key_external_resource: false
 node_external_resource: false  
 node_external_resource_id: ''
+networks: []

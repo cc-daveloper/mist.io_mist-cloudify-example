@@ -64,8 +64,9 @@ inputs:
   node_external_resource_id:
     description: Instance id for machine
     default: ''
-
-
+  networks:
+    description: The network ids that will be used by the machine
+    default: []
 
 node_templates:
 
@@ -162,6 +163,7 @@ node_templates:
         location_id: { get_input: location_id }
         name: { get_input: name } 
         monitoring: { get_input: monitoring }
+        networks: {get_input: networks}
       mist_config:
         username: { get_input: username }
         password: { get_input: password }
