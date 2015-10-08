@@ -31,14 +31,16 @@ This plugin needs [an account on mist.io](https://mist.io/).
 ## Step 1: Initialize
  
 
-You need to add a cloud on mist.io account.Click "ADD CLOUD" ![alt tag](http://d33v4339jhl8k0.cloudfront.net/docs/assets/555c5984e4b01a224b425242/images/5605257f903360177092e035/file-ysREVMYhF4.png)
+You need to add a cloud on mist.io account.Click "ADD CLOUD" </br>
+![alt tag](http://d33v4339jhl8k0.cloudfront.net/docs/assets/555c5984e4b01a224b425242/images/5605257f903360177092e035/file-ysREVMYhF4.png)
 
+</br>
 The nodecellar scripts are made for ubuntu image and has been tested with AWS service.
 
 Check the blueprint file inputs section and fill
 the [mist input](inputs/mist.yaml) file with the necessary information.
 
-There are two blueprints. The [mist-blueprint](mist-blueprint.yaml file uses the mist.io service to run the scripts on the machine so the user can read the logs be notified about operation success.
+There are two blueprints. The [mist-blueprint](mist-blueprint.yaml) file uses the mist.io service to run the scripts on the machine so the user can read the logs be notified about operation success.
 The [mistfabric-blueprint](mistfabric-blueprint.yaml) file uses the cloudify fabric plugin to run the scripts:
 
 ### Blueprint using Mist Script runnner
@@ -53,8 +55,9 @@ This command (as the name suggests) initializes your working directory to work w
 Now, you can run any type of workflows on this blueprint. <br>
 
 ## Step 2: Install
-
-Lets run the `install` workflow: <br>
+First visit [mist.io machines page](https://mist.io/#/machines) to see the machine been created and click on
+it to view the logs if the scripts running.
+Then run the `install` workflow: <br>
 
 `cfy local execute -w install`
 
@@ -62,11 +65,12 @@ This command will install all the application components on you mist machine.
 (don't worry, its all installed under the `tmp` directory)<br>
 Once its done, you should be able to browse to [http://mist-machine-public-ip:8080](http://mist-machine-public-ip:8080) and see the application.
 <br>
+You can view the public ip of your machine on Basic Info  section of the machine page.
 
 
 ## Step 3: Uninstall
 
-To uninstall the application we run the `uninstall` workflow and will also destroy the machine: <br>
+To uninstall the application and destroy the machine we run the `uninstall` workflow : <br>
 
 `cfy local execute -w uninstall`
 
