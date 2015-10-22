@@ -22,6 +22,9 @@ imports:
 #####################################################################################
 
 inputs:
+  mist_uri:
+    description: The mist custom uri
+    default: ''
   ssh_user:
     description: The ssh user on the machine
     default: ''
@@ -39,6 +42,9 @@ inputs:
     default: ''
   backend_id:
     description: The mist.io backend id
+    default: ''
+  backend_name:
+    description: The mist.io backend name if no backend_id is defined
     default: ''
   image_id:
     description: The image id
@@ -92,8 +98,10 @@ node_templates:
     properties:    
       mist_config:
         username: { get_input: username }
-        password: { get_input: password }            
+        password: { get_input: password }
+        mist_uri: { get_input: mist_uri }
       parameters:
+        backend_name: { get_input: backend_name }
         backend_id: { get_input: backend_id }
         image_id: { get_input: image_id }
         size_id: { get_input: size_id }
@@ -109,8 +117,10 @@ node_templates:
       mist_config:
         username: { get_input: username }
         password: { get_input: password }            
+        mist_uri: { get_input: mist_uri }
       parameters:
         backend_id: { get_input: backend_id }
+        backend_name: { get_input: backend_name }
         image_id: { get_input: image_id }
         size_id: { get_input: size_id }
         location_id: { get_input: location_id }
@@ -125,9 +135,11 @@ node_templates:
       mist_config:
         username: { get_input: username }
         password: { get_input: password }            
+        mist_uri: { get_input: mist_uri }
       parameters:
         backend_id: { get_input: backend_id }
         image_id: { get_input: image_id }
+        backend_name: { get_input: backend_name }
         size_id: { get_input: size_id }
         location_id: { get_input: location_id }
         name: { get_input: name } 
@@ -141,10 +153,12 @@ node_templates:
       mist_config:
         username: { get_input: username }
         password: { get_input: password }            
+        mist_uri: { get_input: mist_uri }
       parameters:
         backend_id: { get_input: backend_id }
         image_id: { get_input: image_id }
         size_id: { get_input: size_id }
+        backend_name: { get_input: backend_name }
         location_id: { get_input: location_id }
         name: { get_input: name } 
 
@@ -165,9 +179,11 @@ node_templates:
         name: { get_input: name } 
         monitoring: { get_input: monitoring }
         networks: {get_input: networks}
+        backend_name: { get_input: backend_name }
       mist_config:
         username: { get_input: username }
         password: { get_input: password }
+        mist_uri: { get_input: mist_uri }
     relationships:
       - target: key
         type: cloudify.mist.relationships.server_connected_to_keypair
