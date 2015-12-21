@@ -8,10 +8,8 @@ node_types:
   ###########################################################
   nodecellar.nodes.MonitoredServerKey:
     derived_from: cloudify.mist.nodes.KeyPair
- 
   nodecellar.nodes.MonitoredServer:
     derived_from: cloudify.mist.nodes.Server
     properties:
       install_agent:
         default: false
-   

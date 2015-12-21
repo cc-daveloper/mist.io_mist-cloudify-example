@@ -25,22 +25,22 @@ node_types:
         default: 27017
     interfaces:
       cloudify.interfaces.lifecycle:
-        create: 
+        create:
           implementation: mist.plugin.server.run_script
           inputs:
             script:
               default: scripts/mongo/install-mongo.sh
-        start: 
+        start:
           implementation: mist.plugin.server.run_script
           inputs:
             script:
               default: scripts/mongo/start-mongo.sh
-        stop: 
+        stop:
           implementation: mist.plugin.server.run_script
           inputs:
             script:
               default: scripts/mongo/stop-mongo.sh
-          
+
 
   nodecellar.nodes.MonitoredMongoDatabase:
     derived_from: nodecellar.nodes.MongoDatabase
@@ -48,15 +48,15 @@ node_types:
       mist_config:
         default: {}
       parameters:
-        default: {}  
+        default: {}
     interfaces:
       cloudify.interfaces.lifecycle:
-        create: 
+        create:
           implementation: mist.plugin.server.run_script
           inputs:
             script:
               default: scripts/mongo/install-mongo.sh
-        start: 
+        start:
           implementation: mist.plugin.server.run_script
           inputs:
             script:
@@ -68,18 +68,18 @@ node_types:
         # lifecycle hook of this node.
         ###########################################################
 
-        configure: 
+        configure:
           implementation: mist.plugin.server.run_script
           inputs:
             script:
               default: scripts/mongo/install-pymongo.sh
-        stop: 
+        stop:
           implementation: mist.plugin.server.run_script
           inputs:
             script:
               default: scripts/mongo/stop-mongo.sh
 
-   
+
   ###########################################################
   # NodeJS Server.
   #
@@ -90,7 +90,7 @@ node_types:
     derived_from: cloudify.nodes.ApplicationServer
     interfaces:
       cloudify.interfaces.lifecycle:
-        create: 
+        create:
           implementation: mist.plugin.server.run_script
           inputs:
             script:
@@ -135,22 +135,22 @@ node_types:
       mist_config:
         default: {}
       parameters:
-        default: {}    
+        default: {}
     interfaces:
       cloudify.interfaces.lifecycle:
-        configure: 
+        configure:
           implementation: mist.plugin.server.run_script
           inputs:
             script:
               default: scripts/nodecellar/install-nodecellar-app.sh
             params:
-              default: ""  
-        start: 
+              default: ""
+        start:
           implementation: mist.plugin.server.run_script
           inputs:
             script:
               default: scripts/nodecellar/start-nodecellar-app.sh
-        stop: 
+        stop:
           implementation: mist.plugin.server.run_script
           inputs:
             script:
@@ -193,7 +193,7 @@ relationships:
     derived_from: cloudify.relationships.contained_in
     # target_interfaces:
     #   cloudify.interfaces.relationship_lifecycle:
-    #     preconfigure: 
+    #     preconfigure:
     #       implementation: mist.plugin.server.run_script
     #       inputs:
     #         script:
