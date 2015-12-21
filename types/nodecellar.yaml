@@ -67,12 +67,6 @@ node_types:
         # pymongo. We install this library in the 'configure'
         # lifecycle hook of this node.
         ###########################################################
-
-        configure:
-          implementation: mist.plugin.server.run_script
-          inputs:
-            script:
-              default: scripts/mongo/install-pymongo.sh
         stop:
           implementation: mist.plugin.server.run_script
           inputs:
