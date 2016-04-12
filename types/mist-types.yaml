@@ -9,7 +9,12 @@ node_types:
   nodecellar.nodes.MonitoredServerKey:
     derived_from: cloudify.mist.nodes.KeyPair
   nodecellar.nodes.MonitoredServer:
-    derived_from: cloudify.mist.nodes.Server
+    derived_from: cloudify.mist.nodes.KubernetesWorker
+    properties:
+      install_agent:
+        default: false
+  nodecellar.nodes.KubernetesMaster:
+    derived_from: cloudify.mist.nodes.KubernetesMaster
     properties:
       install_agent:
         default: false

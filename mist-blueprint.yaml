@@ -7,7 +7,7 @@ tosca_definitions_version: cloudify_dsl_1_1
 
 imports:
   - http://www.getcloudify.org/spec/cloudify/3.3m5/types.yaml
-  - https://raw.githubusercontent.com/mistio/cloudify-mist-plugin/master/plugin.yaml
+  - http://localhost:8000/plugin.yaml
   - types/nodecellar.yaml
   - types/mist-types.yaml
 
@@ -51,6 +51,9 @@ inputs:
   image_id:
     description: The image id
     default: ''
+  coreos:
+    description: True if the image is coreos
+    default: false
   size_id:
     description: The size id
     default: ''
@@ -60,98 +63,41 @@ inputs:
   monitoring:
     description: Enable mist monitoring
     default: false
-  name:
+  worker_name:
     description: The machine name
+    default: ''
+  master_name:
+    description: The machine name of Kubernetes Master
     default: ''
   key_external_resource:
     description: External resource for key
-    default: false
-  node_external_resource:
+    default: true
+  worker_external_resource:
     description: External resource for machine
     default: false
-  node_external_resource_id:
+  worker_external_resource_id:
     description: Instance id for machine
     default: ''
+  master_external_resource:
+    description: External resource for machine
+    default: false
+  master_external_resource_id:
+    description: Instance id for machine
+    default: ''
+  master_configured:
+    description: Whether the master is already configured or not
+    default: false
+  worker_configured:
+    description: Whether the worker is already configured or not
+    default: false
   networks:
     description: The network ids that will be used by the machine
     default: []
-
 node_templates:
-
-  nodecellar:
-    type: nodecellar.nodes.NodecellarApplicationModule
-    relationships:
-
-      ################################
-      # Setting the mongo connection
-      ################################
-
-      - type: node_connected_to_mongo
-        target: mongod
-
-      ################################
-      # Setting the nodejs connection
-      ################################
-
-      - type: node_contained_in_nodejs
-        target: nodejs
-
-    properties:
-      mist_config:
-        username: { get_input: username }
-        api_token: { get_input: api_token }
-        password: { get_input: password }
-        mist_uri: { get_input: mist_uri }
-      parameters:
-        cloud_name: { get_input: cloud_name }
-        cloud_id: { get_input: cloud_id }
-        image_id: { get_input: image_id }
-        size_id: { get_input: size_id }
-        location_id: { get_input: location_id }
-        name: { get_input: name }
-
-  mongod:
-    type: nodecellar.nodes.MonitoredMongoDatabase
-    relationships:
-      - type: cloudify.relationships.contained_in
-        target: host
-    properties:
-      mist_config:
-        api_token: { get_input: api_token }
-        username: { get_input: username }
-        password: { get_input: password }
-        mist_uri: { get_input: mist_uri }
-      parameters:
-        cloud_name: { get_input: cloud_name }
-        cloud_id: { get_input: cloud_id }
-        image_id: { get_input: image_id }
-        size_id: { get_input: size_id }
-        location_id: { get_input: location_id }
-        name: { get_input: name }
-
-  nodejs:
-    type: nodecellar.nodes.NodeJSServer
-    relationships:
-      - type: cloudify.relationships.contained_in
-        target: host
-    properties:
-      mist_config:
-        api_token: { get_input: api_token }
-        username: { get_input: username }
-        password: { get_input: password }
-        mist_uri: { get_input: mist_uri }
-      parameters:
-        cloud_name: { get_input: cloud_name }
-        cloud_id: { get_input: cloud_id }
-        image_id: { get_input: image_id }
-        size_id: { get_input: size_id }
-        location_id: { get_input: location_id }
-        name: { get_input: name }
-
   key:
     type: nodecellar.nodes.MonitoredServerKey
     properties:
-      use_external_resource: { get_input: key_external_resource }
+      use_external_resource: true
       resource_id: { get_input: key_name }
       private_key_path: { get_input: private_key_path }
       mist_config:
@@ -159,22 +105,24 @@ node_templates:
         username: { get_input: username }
         password: { get_input: password }
         mist_uri: { get_input: mist_uri }
-      parameters:
-        cloud_name: { get_input: cloud_name }
-        cloud_id: { get_input: cloud_id }
-        image_id: { get_input: image_id }
-        size_id: { get_input: size_id }
-        location_id: { get_input: location_id }
-        name: { get_input: name }
+      # parameters:
+      #   cloud_name: { get_input: cloud_name }
+      #   cloud_id: { get_input: cloud_id }
+      #   image_id: { get_input: image_id }
+      #   size_id: { get_input: size_id }
+      #   location_id: { get_input: location_id }
+      #   name: { get_input: name }
 
-  host:
-    type: nodecellar.nodes.MonitoredServer
+
+  master:
+    type: nodecellar.nodes.KubernetesMaster
     properties:
       cloudify_agent:
         user: { get_input: ssh_user }
         key: { get_input: private_key_path }
-      use_external_resource: { get_input: node_external_resource }
-      resource_id: { get_input: node_external_resource_id }
+      use_external_resource: { get_input: master_external_resource }
+      resource_id: { get_input: master_external_resource_id }
+      configured: { get_input: master_configured }
       parameters:
         key_name: { get_input: key_name }
         cloud_id: { get_input: cloud_id }
@@ -182,18 +130,124 @@ node_templates:
         image_id: { get_input: image_id }
         size_id: { get_input: size_id }
         location_id: { get_input: location_id }
-        name: { get_input: name }
+        name: { get_input: master_name }
         monitoring: { get_input: monitoring }
         networks: {get_input: networks}
+        coreos: {get_input: coreos}
+
       mist_config:
         api_token: { get_input: api_token }
         username: { get_input: username }
         password: { get_input: password }
         mist_uri: { get_input: mist_uri }
 
+
+  worker:
+    type: nodecellar.nodes.MonitoredServer
+    properties:
+      cloudify_agent:
+        user: { get_input: ssh_user }
+        key: { get_input: private_key_path }
+      use_external_resource: { get_input: worker_external_resource }
+      resource_id: { get_input: worker_external_resource_id }
+      configured: { get_input: worker_configured }
+      parameters:
+        key_name: { get_input: key_name }
+        cloud_id: { get_input: cloud_id }
+        cloud_name: { get_input: cloud_name }
+        image_id: { get_input: image_id }
+        size_id: { get_input: size_id }
+        location_id: { get_input: location_id }
+        name: { get_input: worker_name }
+        monitoring: { get_input: monitoring }
+        networks: {get_input: networks}
+        coreos: {get_input: coreos}
+      mist_config:
+        api_token: { get_input: api_token }
+        username: { get_input: username }
+        password: { get_input: password }
+        mist_uri: { get_input: mist_uri }
     relationships:
-      - target: key
-        type: cloudify.mist.relationships.server_connected_to_keypair
+      - target: master
+        type: cloudify.relationships.connected_to
+
+
+
+
+workflows:
+  scale_cluster_up:
+    mapping: mist.plugin.kubernetes.scale_cluster_up
+    parameters:
+      use_external_resource:
+        default: false
+      external_resource_id:
+        default: ''
+      key_name:
+        description: this parameter is mandatory
+      cloud_id:
+        description: this parameter is mandatory
+      image_id:
+        description: this parameter is mandatory
+      size_id:
+        description: this parameter is mandatory
+      location_id:
+        description: this parameter is mandatory
+      name:
+        description: this parameter is mandatory
+      monitoring:
+        description: this parameter is mandatory
+      networks:
+        description: this parameter is mandatory
+      coreos:
+        description: this parameter is mandatory
+      delta:
+        description: number of workers
+        default: 1
+  scale_cluster_down:
+    mapping: mist.plugin.kubernetes.scale_cluster_down
+    parameters:
+      cloud_id:
+        description: this parameter is mandatory
+      name:
+        description: this parameter is mandatory
+      delta:
+        description: number of workers
+        default: 1
+  # host2:
+  #   type: nodecellar.nodes.MonitoredServer
+  #   # relationships:
+  #   #   - type: cloudify.relationships.contained_in
+  #   #     target: master
+  #   properties:
+  #     cloudify_agent:
+  #       user: { get_input: ssh_user }
+  #       key: { get_input: private_key_path }
+  #     use_external_resource: { get_input: node_external_resource }
+  #     resource_id: { get_input: node_external_resource_id }
+  #     parameters:
+  #       key_name: { get_input: key_name }
+  #       cloud_id: { get_input: cloud_id }
+  #       cloud_name: { get_input: cloud_name }
+  #       image_id: { get_input: image_id }
+  #       size_id: { get_input: size_id }
+  #       location_id: { get_input: location_id }
+  #       name: { get_input: worker_name2 }
+  #       monitoring: { get_input: monitoring }
+  #       networks: {get_input: networks}
+  #       coreos: {get_input: coreos}
+  #     mist_config:
+  #       api_token: { get_input: api_token }
+  #       username: { get_input: username }
+  #       password: { get_input: password }
+  #       mist_uri: { get_input: mist_uri }
+  #   interfaces:
+  #     cloudify.interfaces.lifecycle:
+  #       configure:
+  #         inputs:
+  #           master_ip: { get_attribute: [ master, priv_ip ] }
+  #   relationships:
+  #     - target: master
+  #       type: cloudify.relationships.connected_to
 
 
 
@@ -203,13 +257,82 @@ node_templates:
 #   - cfy deployments -d <deployment_id> outputs
 ###########################################################
 
+
 outputs:
   endpoint:
-    description: Web application endpoint
+    description: Master endpoint
     value:
-      ip_address: { get_property: [ host, ip ] }
-      port: { get_property: [ nodecellar, port ] }
+      ip_address: { get_property: [ master, ip ] }
 
 
 
 
+  # nodecellar:
+  #   type: nodecellar.nodes.NodecellarApplicationModule
+  #   relationships:
+
+  #     ################################
+  #     # Setting the mongo connection
+  #     ################################
+
+  #     - type: node_connected_to_mongo
+  #       target: mongod
+
+  #     ################################
+  #     # Setting the nodejs connection
+  #     ################################
+
+  #     - type: node_contained_in_nodejs
+  #       target: nodejs
+
+  #   properties:
+  #     mist_config:
+  #       username: { get_input: username }
+  #       api_token: { get_input: api_token }
+  #       password: { get_input: password }
+  #       mist_uri: { get_input: mist_uri }
+  #     parameters:
+  #       cloud_name: { get_input: cloud_name }
+  #       cloud_id: { get_input: cloud_id }
+  #       image_id: { get_input: image_id }
+  #       size_id: { get_input: size_id }
+  #       location_id: { get_input: location_id }
+  #       name: { get_input: name }
+
+  # mongod:
+  #   type: nodecellar.nodes.MonitoredMongoDatabase
+  #   relationships:
+  #     - type: cloudify.relationships.contained_in
+  #       target: host
+  #   properties:
+  #     mist_config:
+  #       api_token: { get_input: api_token }
+  #       username: { get_input: username }
+  #       password: { get_input: password }
+  #       mist_uri: { get_input: mist_uri }
+  #     parameters:
+  #       cloud_name: { get_input: cloud_name }
+  #       cloud_id: { get_input: cloud_id }
+  #       image_id: { get_input: image_id }
+  #       size_id: { get_input: size_id }
+  #       location_id: { get_input: location_id }
+  #       name: { get_input: name }
+
+  # nodejs:
+  #   type: nodecellar.nodes.NodeJSServer
+  #   relationships:
+  #     - type: cloudify.relationships.contained_in
+  #       target: host
+  #   properties:
+  #     mist_config:
+  #       api_token: { get_input: api_token }
+  #       username: { get_input: username }
+  #       password: { get_input: password }
+  #       mist_uri: { get_input: mist_uri }
+  #     parameters:
+  #       cloud_name: { get_input: cloud_name }
+  #       cloud_id: { get_input: cloud_id }
+  #       image_id: { get_input: image_id }
+  #       size_id: { get_input: size_id }
+  #       location_id: { get_input: location_id }
+  #       name: { get_input: name }
