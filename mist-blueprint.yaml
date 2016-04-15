@@ -7,7 +7,7 @@ tosca_definitions_version: cloudify_dsl_1_1
 
 imports:
   - http://www.getcloudify.org/spec/cloudify/3.3m5/types.yaml
-  - http://localhost:8000/plugin.yaml
+  - https://raw.githubusercontent.com/mistio/cloudify-mist-plugin/master/plugin.yaml
   - types/nodecellar.yaml
   - types/mist-types.yaml
 
