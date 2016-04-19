@@ -1,0 +1,158 @@
+###########################################################
+# This Blueprint installs the nodecellar application
+# on an mist.io cloud environment.
+###########################################################
+
+tosca_definitions_version: cloudify_dsl_1_1
+
+imports:
+  - http://www.getcloudify.org/spec/cloudify/3.3m5/types.yaml
+  - https://raw.githubusercontent.com/mistio/cloudify-mist-plugin/master/plugin.yaml
+  - types/nodecellar.yaml
+  - types/mist-types.yaml
+
+
+#####################################################################################
+# inputs section allows the user to use same
+# blueprint for creating different deployments, each one
+# with its own parameters.
+# to specify deployment inputs run:
+#   - cfy deployments create -b <blueprint_id> -d <deployment_id> -i inputs.json
+#####################################################################################
+
+inputs:
+  mist_uri:
+    description: The mist custom uri
+    default: ''
+  ssh_user:
+    description: The ssh user on the machine
+    default: ''
+  private_key_path:
+    description: The local path where private key is saved
+    default: ''
+  username:
+    description: Mist.io username
+    default: ''
+  password:
+    description: Mist.io password
+    default: ''
+  api_token:
+    description: Mist.io api token
+    default: ''
+  key_name:
+    description: The name of the private key
+    default: ''
+  cluster_cloud_id:
+    description: The mist.io cloud id
+    default: ''
+  cloud_name:
+    description: The mist.io cloud name
+    default: ''
+  cluster_image_id:
+    description: The image id
+    default: ''
+  coreos:
+    description: True if the image is coreos
+    default: false
+  cluster_size_id:
+    description: The size id
+    default: ''
+  cluster_location_id:
+    description: The location id
+    default: ''
+  monitoring:
+    description: Enable mist monitoring
+    default: false
+  worker_name:
+    description: The machine name
+    default: ''
+  master_name:
+    description: The machine name of Kubernetes Master
+    default: ''
+  key_external_resource:
+    description: External resource for key
+    default: true
+  worker_external_resource:
+    description: External resource for machine
+    default: false
+  worker_external_resource_id:
+    description: Instance id for machine
+    default: ''
+  master_external_resource:
+    description: External resource for machine
+    default: false
+  master_external_resource_id:
+    description: Instance id for machine
+    default: ''
+  master_configured:
+    description: Whether the master is already configured or not
+    default: false
+  worker_configured:
+    description: Whether the worker is already configured or not
+    default: false
+  networks:
+    description: The network ids that will be used by the machine
+    default: []
+
+
+node_types:
+
+
+  ###########################################################
+  # We define a type that inherits openstack's default
+  # server, and adds monitoring capabillities on top of it.
+  ###########################################################
+  nodecellar.nodes.MonitoredServerKey:
+    derived_from: cloudify.mist.nodes.KeyPair
+  nodecellar.nodes.testMachine:
+    derived_from: cloudify.mist.nodes.Server
+    properties:
+      install_agent:
+        default: false
+
+node_templates:
+  key:
+    type: nodecellar.nodes.MonitoredServerKey
+    properties:
+      use_external_resource: true
+      resource_id: { get_input: key_name }
+      private_key_path: { get_input: private_key_path }
+      mist_config:
+        api_token: { get_input: api_token }
+        username: { get_input: username }
+        password: { get_input: password }
+        mist_uri: { get_input: mist_uri }
+      # parameters:
+      #   cloud_name: { get_input: cloud_name }
+      #   cloud_id: { get_input: cloud_id }
+      #   image_id: { get_input: image_id }
+      #   size_id: { get_input: size_id }
+      #   location_id: { get_input: location_id }
+      #   name: { get_input: name }
+
+  simple:
+    type: nodecellar.nodes.testMachine
+    properties:
+      cloudify_agent:
+        user: { get_input: ssh_user }
+        key: { get_input: private_key_path }
+      use_external_resource: { get_input: master_external_resource }
+      resource_id: { get_input: master_external_resource_id }
+      configured: { get_input: master_configured }
+      parameters:
+        key_name: { get_input: key_name }
+        cloud_id: { get_input: cluster_cloud_id }
+        cloud_name: { get_input: cloud_name }
+        image_id: { get_input: cluster_image_id }
+        size_id: { get_input: cluster_size_id }
+        location_id: { get_input: cluster_location_id }
+        name: { get_input: master_name }
+        monitoring: { get_input: monitoring }
+        networks: {get_input: networks}
+        coreos: {get_input: coreos}
+
+      mist_config:
+        api_token: { get_input: api_token }
+        username: { get_input: username }
+        password: { get_input: password }
+        mist_uri: { get_input: mist_uri }
