@@ -9,7 +9,6 @@ imports:
   - http://www.getcloudify.org/spec/cloudify/3.3m5/types.yaml
   - https://raw.githubusercontent.com/mistio/cloudify-mist-plugin/master/plugin.yaml
   - types/nodecellar.yaml
-  - types/mist-types.yaml
 
 
 #####################################################################################
