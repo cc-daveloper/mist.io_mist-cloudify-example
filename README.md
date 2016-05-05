@@ -25,7 +25,14 @@ This plugin needs [an account on mist.io](https://mist.io/).
 **From now on, all commands will assume that the working directory is the root of this repository.**
 
 ## Install dependencies
+`virtualenv env` </br>
+`env/bin/activate` </br>
 `pip install -r dev-requirements.txt` </br>
+`pip install cloudify https://github.com/mistio/mist.client/archive/cloudify_integration.zip` </br>
+`pip install cloudify` </br>
+`git clone https://github.com/mistio/cloudify-mist-plugin` </br>
+`python cloudify-mist-plugin/setup.py develop` </br>
+
 
 
 ## Step 1: Initialize
@@ -44,6 +51,10 @@ There are two blueprints. The [mist-blueprint](mist-blueprint.yaml) file uses th
 The [mistfabric-blueprint](mistfabric-blueprint.yaml) file uses the cloudify fabric plugin to run the scripts:
 
 ### Blueprint using Mist Script runnner
+
+`cfy local init -p mist-blueprint.yaml -i inputs.json` </br>
+`` </br>
+`` </br>
 
 `cfy local init --install-plugins -p  mist-blueprint.yaml -i inputs/mist.yaml` <br>
 
