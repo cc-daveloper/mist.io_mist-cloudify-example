@@ -25,7 +25,14 @@ This plugin needs [an account on mist.io](https://mist.io/).
 **From now on, all commands will assume that the working directory is the root of this repository.**
 
 ## Install dependencies
+`virtualenv env` </br>
+`env/bin/activate` </br>
 `pip install -r dev-requirements.txt` </br>
+`pip install cloudify https://github.com/mistio/mist.client/archive/cloudify_integration.zip` </br>
+`pip install cloudify` </br>
+`git clone https://github.com/mistio/cloudify-mist-plugin` </br>
+`python cloudify-mist-plugin/setup.py develop` </br>
+
 
 
 ## Step 1: Initialize
@@ -45,32 +52,35 @@ The [mistfabric-blueprint](mistfabric-blueprint.yaml) file uses the cloudify fab
 
 ### Blueprint using Mist Script runnner
 
-`cfy local init --install-plugins -p  mist-blueprint.yaml -i inputs/mist.yaml` <br>
+`cfy local init -p mist-blueprint.yaml -i inputs/mist.yaml` </br>
+`` </br>
+`` </br>
 
-### Blueprint using the cloudify-fabric-plugin
-
-`cfy local init --install-plugins -p mistfabric-blueprint.yaml -i inputs/mist.yaml` <br>
 
 This command (as the name suggests) initializes your working directory to work with the given blueprint.
 Now, you can run any type of workflows on this blueprint. <br>
 
-## Step 2: Install
+## Step 2: Install a kubernetes cluster
 First visit [mist.io machines page](https://mist.io/#/machines) to see the machine been created and click on
 it to view the logs if the scripts running.
 Then run the `install` workflow: <br>
 
 `cfy local execute -w install`
 
-This command will install all the application components on you mist machine.
-(don't worry, its all installed under the `tmp` directory)<br>
-Once its done, you should be able to browse to [http://mist-machine-public-ip:8080](http://mist-machine-public-ip:8080) and see the application.
+This command will install the kubernetes master and a kubernetes minion.
 <br>
-You can view the public ip of your machine on Basic Info  section of the machine page.
+You can view the public ip of the kubernetes master on Basic Info  section of the master machine page.
 
+##Step 3: Scale cluster
+To scale the cluster up  first edit the `inputs/new_worker.yaml` file with the proper inputs. Edit the `delta` parameter to specify the number of machines to be added to the cluster. Then run :
+`cfy local execute -w scale_cluster_up -p inputs/new_worker.yaml `
+
+To scale the cluster down edit the `inputs/remove_worker.yaml` file and specify the delta parameter as to how many machines should be removed(destroyed) from the cluster and then run:
+`cfy local execute -w scale_cluster_down -p inputs/remove_worker.yaml `
 
 ## Step 3: Uninstall
 
-To uninstall the application and destroy the machine we run the `uninstall` workflow : <br>
+To uninstall the kubernetes cluster and destroy all the machines we run the `uninstall` workflow : <br>
 
 `cfy local execute -w uninstall`
 
