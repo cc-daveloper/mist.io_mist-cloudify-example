@@ -71,7 +71,7 @@ This command will install the kubernetes master and a kubernetes minion.
 You can view the public ip of the kubernetes master on Basic Info  section of the master machine page.
 
 ## Step 3: Scale cluster
-To scale the cluster up  first edit the `inputs/new_worker.yaml` file with the proper inputs. Edit the `delta` parameter to specify the number of machines to be added to the cluster. Then run :
+To scale the cluster up  first edit the `inputs/new_worker.yaml` file with the proper inputs. Edit the `delta` parameter to specify the number of machines to be added to the cluster. Other input fields are the same as the inputs given on initialization. Then run :
 `cfy local execute -w scale_cluster_up -p inputs/new_worker.yaml `
 
 To scale the cluster down edit the `inputs/remove_worker.yaml` file and specify the delta parameter as to how many machines should be removed(destroyed) from the cluster and then run:
