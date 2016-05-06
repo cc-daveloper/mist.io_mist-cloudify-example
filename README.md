@@ -47,7 +47,12 @@ The kubernetes example scripts are made for the coreos image and has been tested
 There is also support for other linux distribution using the recommended [scripts from kubernetes repo](https://github.com/kubernetes/kubernetes/tree/master/docs/getting-started-guides/docker-multinode)
 
 Check the blueprint file inputs section and fill
-the [mist input](inputs/mist.yaml) file with the necessary information.
+the [mist input](inputs/mist.yaml) file with the necessary information.The only fields you have to modify are
+<br> `api_token`(create an api_token through the account page on mist.io)
+<br> `key_name` (add or create a key on the mist.io)
+<br> `cloud_id` (find the cloud_id by clicking on the cloud name on mist.io)
+<br> `image_id` (if not deploying on aws you'll have to change the image_id to a coreos image on the provider you want to deploy)
+Then run:
 
 `cfy local init -p mist-blueprint.yaml -i inputs/mist.yaml` </br>
 
