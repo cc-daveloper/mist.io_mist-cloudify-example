@@ -19,16 +19,18 @@ You also need [an account on mist.io](https://mist.io/).
 <br><br>
 **From now on, all commands will assume that the working directory is the root of this repository.**
 ## Instructions
-`git clone https://github.com/mistio/mist-cloudify-example`
-`cd mist-cloudify-example`
-`virtualenv . # create virtualenv`
-`source bin/activate`
-`pip install -r dev-requirements.txt # install dependencies`
-`pip install cloudify https://github.com/mistio/mist.client/archive/cloudify_integration.zip`
-`git clone https://github.com/mistio/cloudify-mist-plugin`
-`cd cloudify-mist-plugin`
-`python setup.py  develop`
 
+```
+git clone https://github.com/mistio/mist-cloudify-example
+cd mist-cloudify-example
+virtualenv . # create virtualenv
+source bin/activate
+pip install -r dev-requirements.txt # install dependencies
+pip install cloudify https://github.com/mistio/mist.client/archive/cloudify_integration.zip
+git clone https://github.com/mistio/cloudify-mist-plugin
+cd cloudify-mist-plugin
+python setup.py  develop
+```
 
 ## Step 1: Initialize
 
