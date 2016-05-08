@@ -10,40 +10,45 @@ Kubernetes cluster example consists of:
 Before you begin its recommended you familiarize yourself with
 [Cloudify Terminology](http://getcloudify.org/guide/3.1/reference-terminology.html).
 
-The first thing you'll need to do is
-[install the Cloudify CLI](http://getcloudify.org/guide/3.1/installation-cli.html).
-<br>
-This will let you run the various blueprints.
-This plugin needs [an account on mist.io](https://mist.io/).
+You also need [an account on mist.io](https://mist.io/).
+
+<br> This has been succesfully tested on Ubuntu 14.04 and python 2.7
 
 **Note: <br>Documentation about the blueprints content is located inside the blueprint files themselves.
 <br>Presented here are only instructions on how to RUN the blueprints using the Cloudify CLI with Mist.io plugin .**
 <br><br>
 **From now on, all commands will assume that the working directory is the root of this repository.**
-## Clone the mist example
-`git clone https://github.com/mistio/mist-cloudify-example` </br>
-`cd mist-cloudify-example` </br>
-`git checkout kubernetes_support` </br>
-
-## Install dependencies
-`virtualenv env` </br>
-`env/bin/activate` </br>
-`pip install -r dev-requirements.txt` </br>
-`pip install cloudify https://github.com/mistio/mist.client/archive/cloudify_integration.zip` </br>
-`pip install cloudify` </br>
-`git clone https://github.com/mistio/cloudify-mist-plugin` </br>
-`python cloudify-mist-plugin/setup.py develop` </br>
-
+## Instructions
+`git clone https://github.com/mistio/mist-cloudify-example`
+`cd mist-cloudify-example`
+`virtualenv . # create virtualenv`
+`source bin/activate`
+`pip install -r dev-requirements.txt # install dependencies`
+`pip install cloudify https://github.com/mistio/mist.client/archive/cloudify_integration.zip`
+`git clone https://github.com/mistio/cloudify-mist-plugin`
+`cd cloudify-mist-plugin`
+`python setup.py  develop`
 
 
 ## Step 1: Initialize
- 
 
-You need to add a cloud on mist.io account.Click "ADD CLOUD" </br>
-![alt tag](http://d33v4339jhl8k0.cloudfront.net/docs/assets/555c5984e4b01a224b425242/images/5605257f903360177092e035/file-ysREVMYhF4.png)
 
-</br>
-The kubernetes example scripts are made for the coreos image and has been tested with AWS service.
+You need to add a cloud on mist.io account.Click "ADD CLOUD". In our example we are adding AWS Ireland (Instructions on how to add an AWS account can be found on http://docs.mist.io/article/17-adding-amazon-ec2). Note the ID of the cloud once it is added succesfully, as it will be used on the mist.yaml input file.
+
+![alt tag](relative/images/id.png)
+
+<br>
+
+You also need to add an ssh key for mist.io that will be deployed to the machines once they are created. Visit the Keys tab on your mist.io dashboard and generate or upload a key. Note the name, as it will be used on the mist.yaml input file.
+
+![alt tag](relative/images/cf.png)
+
+<br>
+
+Now enter your account page (https://mist.io/account) and create a token on the API TOKENS tabs.
+
+
+The kubernetes example scripts are made for a coreos beta image (http://thecloudmarket.com/image/ami-4f4acd3c--coreos-beta-991-2-0) of AWS Ireland and will create c1.medium instances.
 There is also support for other linux distribution using the recommended [scripts from kubernetes repo](https://github.com/kubernetes/kubernetes/tree/master/docs/getting-started-guides/docker-multinode)
 
 Check the blueprint file inputs section and fill
@@ -51,22 +56,45 @@ the [mist input](inputs/mist.yaml) file with the necessary information.The only 
 <br> `api_token`(create an api_token through the account page on mist.io)
 <br> `key_name` (add or create a key on the mist.io)
 <br> `cloud_id` (find the cloud_id by clicking on the cloud name on mist.io)
-<br> `image_id` (if not deploying on aws you'll have to change the image_id to a coreos image on the provider you want to deploy)
+<br> `image_id` (if not deploying on AWS Ireland you'll have to change the image_id to a coreos image on the provider you want to deploy)
 Then run:
 
-`cfy local init -p mist-blueprint.yaml -i inputs/mist.yaml` </br>
+`cfy local init -p mist-blueprint.yaml -i inputs/mist.yaml` <br>
 
 This command (as the name suggests) initializes your working directory to work with the given blueprint.
+
+The output would be something like this:
+
+```
+(mist-cloudify-example)user@user:~/Desktop/mist-cloudify-example$ cfy local init -p mist-blueprint.yaml -i inputs/mist.yaml
+Processing Inputs Source: inputs/mist.yaml
+Initiated mist-blueprint.yaml
+If you make changes to the blueprint, run 'cfy local init -p mist-blueprint.yaml' again to apply them
+```
 Now, you can run any type of workflows on this blueprint. <br>
 
 ## Step 2: Install a kubernetes cluster
-First visit [mist.io machines page](https://mist.io/#/machines) to see the machine been created and click on
-it to view the logs if the scripts running.
-Then run the `install` workflow: <br>
+
+You are now ready to run the `install` workflow: <br>
 
 `cfy local execute -w install`
 
 This command will install the kubernetes master and a kubernetes minion.
+
+The output should be something like that: <br>
+
+```
+(mist-cloudify-example)user@user:~/Desktop/mist-cloudify-example$ cfy local execute -w install
+2016-05-07 22:55:14 CFY <local> Starting 'install' workflow execution
+2016-05-07 22:55:14 CFY <local> [master_db493] Creating node
+2016-05-07 22:55:14 CFY <local> [key_7c759] Creating node
+2016-05-07 22:55:14 CFY <local> [master_db493.create] Sending task 'plugin.kubernetes.create'
+2016-05-07 22:55:14 CFY <local> [key_7c759.create] Sending task 'plugin.keypair.create'
+...
+```
+
+You can visit [mist.io machines page](https://mist.io/#/machines) to see the machines GigaDemoMaster and GigaDemoFirstWorker have been created and click on them to view the logs if the scripts are running.
+
 <br>
 You can view the public ip of the kubernetes master on Basic Info  section of the master machine page.
 
@@ -83,3 +111,12 @@ To uninstall the kubernetes cluster and destroy all the machines we run the `uni
 
 `cfy local execute -w uninstall`
 
+Example output will be something like:
+
+```
+(mist-cloudify-example)user@user:~/unweb/mist-cloudify-example$ cfy local execute -w uninstall
+2016-05-07 23:40:31 CFY <local> Starting 'uninstall' workflow execution
+...
+2016-05-07 23:41:20 LOG <local> [master_db493.delete] INFO: Machine destroyed
+2016-05-07 23:41:20 CFY <local> [master_db493.delete] Task succeeded 'plugin.server.delete'
+```
