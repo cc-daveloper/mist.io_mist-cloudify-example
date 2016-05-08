@@ -35,13 +35,13 @@ You also need [an account on mist.io](https://mist.io/).
 
 You need to add a cloud on mist.io account.Click "ADD CLOUD". In our example we are adding AWS Ireland (Instructions on how to add an AWS account can be found on http://docs.mist.io/article/17-adding-amazon-ec2). Note the ID of the cloud once it is added succesfully, as it will be used on the mist.yaml input file.
 
-![alt tag](relative/images/id.png)
+![alt tag](images/id.png)
 
 <br>
 
 You also need to add an ssh key for mist.io that will be deployed to the machines once they are created. Visit the Keys tab on your mist.io dashboard and generate or upload a key. Note the name, as it will be used on the mist.yaml input file.
 
-![alt tag](relative/images/cf.png)
+![alt tag](images/cf.png)
 
 <br>
 
