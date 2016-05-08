@@ -40,13 +40,11 @@ You need to add a cloud on your mist.io account. Login to the dashboard (https:/
 
 ![alt tag](images/id.png)
 
-<br>
 
 You also need to add an ssh key for mist.io that will be deployed to the machines once they are created. Visit the Keys tab on your mist.io dashboard and generate or upload a key. <br>Note the name, as it will be used on the mist.yaml input file.
 
 ![alt tag](images/cf.png)
 
-<br>
 
 Now enter your [account page](https://mist.io/account) and create a token on the API TOKENS tabs.
 
@@ -102,7 +100,7 @@ The output should be something like that: <br>
 
 ```
 
-This will take a few minutes (eg 10 minutes on AWS Ireland).
+This will take a few minutes (eg 10 minutes on AWS Ireland) and will create the two nodes and setup the kubernetes cluster.
 
 You can visit [mist.io machines page](https://mist.io/#/machines) to see the machines GigaDemoMaster and GigaDemoFirstWorker (if you used the default names on inputs/mist.yaml) have been created and click on them to view the logs if the scripts are running.
 
@@ -125,6 +123,7 @@ NAME            LABELS                                 STATUS     AGE
 
 ## Step 3: Scale cluster
 To scale the cluster up  first edit the `inputs/new_worker.yaml` file with the proper inputs. Edit the `delta` parameter to specify the number of machines to be added to the cluster. Other input fields are the same as the inputs given on initialization. Then run :
+<br>
 `cfy local execute -w scale_cluster_up -p inputs/new_worker.yaml `
 
 Example output would be something like:
@@ -141,10 +140,10 @@ Processing Inputs Source: inputs/new_worker.yaml
 2016-05-08 17:18:33 CFY <local> 'scale_cluster_up' workflow execution succeeded
 ```
 
-Make sure the nodes were added on the cluster
+Make sure the nodes were created and added on the cluster
 
 ```
-user@user:~/unweb/mist-cloudify-example$ kubectl --server=http://54.194.24.223:8080 get nodes
+user@user:~/unweb/mist-cloudify-example$ ./kubectl --server=http://54.194.24.223:8080 get nodes
 NAME            LABELS                                 STATUS     AGE
 172.31.18.235   kubernetes.io/hostname=172.31.18.235   Ready      6m
 172.31.19.30    kubernetes.io/hostname=172.31.19.30    Ready      6m
@@ -153,6 +152,7 @@ NAME            LABELS                                 STATUS     AGE
 
 
 To scale the cluster down edit the `inputs/remove_worker.yaml` file and specify the delta parameter as to how many machines should be removed(destroyed) from the cluster and then run:
+<br>
 `cfy local execute -w scale_cluster_down -p inputs/remove_worker.yaml `
 
 ## Step 4: Uninstall
