@@ -31,6 +31,8 @@ python setup.py  develop
 cd ..
 ```
 
+The above instructions will take 3-4 minutes to run.
+
 ## Step 2: Initialize the environment
 
 
