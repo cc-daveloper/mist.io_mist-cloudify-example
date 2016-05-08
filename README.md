@@ -13,9 +13,8 @@ You also need [an account on mist.io](https://mist.io/).
 
 This has been succesfully tested on Ubuntu 14.04 and python 2.7
 
-**Note: Documentation about the blueprints content is located inside the blueprint files themselves. Presented here are only instructions on how to RUN the blueprints using the Cloudify CLI with Mist.io plugin .**
-<br>
-**All commands will assume that the working directory is the root of this repository.**
+**Note: Documentation about the blueprints content is located inside the blueprint files themselves. Presented here are only instructions on how to run the blueprints using the Cloudify CLI with Mist.io plugin.**
+
 ## Step 1: Install the software
 
 ```
@@ -114,10 +113,44 @@ You can view the public ip of the kubernetes master on Basic Info  section of th
 
 ![alt tag](images/machine.png)
 
+Make sure the cluster has been created with kubectl
+
+```
+user@user:~/unweb/mist-cloudify-example$ curl -O https://storage.googleapis.com/kubernetes-release/release/v1.1.8/bin/linux/amd64/kubectl && chmod +x kubectl
+user@user:~/unweb/mist-cloudify-example$ ./kubectl --server=http://54.194.24.223:8080 get nodes
+NAME            LABELS                                 STATUS     AGE
+172.31.25.152   kubernetes.io/hostname=172.31.25.152   Ready   2m
+```
+
 
 ## Step 3: Scale cluster
 To scale the cluster up  first edit the `inputs/new_worker.yaml` file with the proper inputs. Edit the `delta` parameter to specify the number of machines to be added to the cluster. Other input fields are the same as the inputs given on initialization. Then run :
 `cfy local execute -w scale_cluster_up -p inputs/new_worker.yaml `
+
+Example output would be something like:
+
+```
+(mist-cloudify-example)user@user:~/unweb/mist-cloudify-example$ cfy local execute -w scale_cluster_up -p inputs/new_worker.yaml
+Processing Inputs Source: inputs/new_worker.yaml
+2016-05-08 17:15:25 CFY <local> Starting 'scale_cluster_up' workflow execution
+...
+2016-05-08 17:18:33 LOG <local> INFO:
+2016-05-08 17:18:33 LOG <local> INFO:
+2016-05-08 17:18:33 LOG <local> INFO: Kubernetes worker MGGigaDemoNewWorker-2 installation script succeeded
+2016-05-08 17:18:33 LOG <local> INFO: Upscaling kubernetes cluster succeeded
+2016-05-08 17:18:33 CFY <local> 'scale_cluster_up' workflow execution succeeded
+```
+
+Make sure the nodes were added on the cluster
+
+```
+user@user:~/unweb/mist-cloudify-example$ kubectl --server=http://54.194.24.223:8080 get nodes
+NAME            LABELS                                 STATUS     AGE
+172.31.18.235   kubernetes.io/hostname=172.31.18.235   Ready      6m
+172.31.19.30    kubernetes.io/hostname=172.31.19.30    Ready      6m
+172.31.25.152   kubernetes.io/hostname=172.31.25.152   Ready   32m
+```
+
 
 To scale the cluster down edit the `inputs/remove_worker.yaml` file and specify the delta parameter as to how many machines should be removed(destroyed) from the cluster and then run:
 `cfy local execute -w scale_cluster_down -p inputs/remove_worker.yaml `
