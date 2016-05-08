@@ -49,15 +49,19 @@ You also need to add an ssh key for mist.io that will be deployed to the machine
 Now enter your account page (https://mist.io/account) and create a token on the API TOKENS tabs.
 
 
-The kubernetes example scripts are made for a coreos beta image (http://thecloudmarket.com/image/ami-4f4acd3c--coreos-beta-991-2-0) of AWS Ireland and will create c1.medium instances (http://aws.amazon.com/ec2/previous-generation/).
-There is also support for other linux distribution using the recommended [scripts from kubernetes repo](https://github.com/kubernetes/kubernetes/tree/master/docs/getting-started-guides/docker-multinode)
+The kubernetes example scripts are made for a [coreos beta image](http://thecloudmarket.com/image/ami-4f4acd3c--coreos-beta-991-2-0) of AWS Ireland and will create [c1.medium instances](http://aws.amazon.com/ec2/previous-generation/).
+<br>There is also support for other linux distribution using the recommended [scripts from kubernetes repo](https://github.com/kubernetes/kubernetes/tree/master/docs/getting-started-guides/docker-multinode)
 
 Check the blueprint file inputs section and fill
-the [mist input](inputs/mist.yaml) file with the necessary information.The only fields you have to modify are
-<br> `api_token`(create an api_token through the account page on mist.io)
-<br> `key_name` (add or create a key on the mist.io)
-<br> `cloud_id` (find the cloud_id by clicking on the cloud name on mist.io)
-<br> `image_id` (if not deploying on AWS Ireland you'll have to change the image_id to a coreos image on the provider you want to deploy)
+the mist input (inputs/mist.yaml) file with the necessary information.
+
+<br>The only fields you have to modify are
+<br> `api_token`(the api_token you have created through the API TOKENS tab of the mist.io account page)
+<br> `key_name` (name of the key you have added/uploaded on mist.io)
+<br> `cloud_id` (the cloud_id of the cloud you have added on mist.io)
+<br> `image_id` (the image id of the image you are deploying. By default this is coreos beta for AWS Ireland, so if you are deploying on a different cloud you need to change this)
+
+<br><br>
 Then run:
 
 `cfy local init -p mist-blueprint.yaml -i inputs/mist.yaml` <br>
