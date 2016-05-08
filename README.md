@@ -28,6 +28,7 @@ pip install cloudify https://github.com/mistio/mist.client/archive/cloudify_inte
 git clone https://github.com/mistio/cloudify-mist-plugin
 cd cloudify-mist-plugin
 python setup.py  develop
+cd ..
 ```
 
 ## Step 2: Initialize the environment
@@ -61,7 +62,7 @@ the mist input (inputs/mist.yaml) file with the necessary information.
 <br> `cloud_id` (the cloud_id of the cloud you have added on mist.io)
 <br> `image_id` (the image id of the image you are deploying. By default this is coreos beta for AWS Ireland, so if you are deploying on a different cloud you need to change this)
 
-<br><br>
+<br>
 Then run:
 
 `cfy local init -p mist-blueprint.yaml -i inputs/mist.yaml` <br>
