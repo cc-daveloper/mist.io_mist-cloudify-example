@@ -92,13 +92,15 @@ This command will install the kubernetes master and a kubernetes minion.
 The output should be something like that: <br>
 
 ```
-(mist-cloudify-example)user@user:~/mist-cloudify-example$ cfy local execute -w install
-2016-05-07 22:55:14 CFY <local> Starting 'install' workflow execution
-2016-05-07 22:55:14 CFY <local> [master_db493] Creating node
-2016-05-07 22:55:14 CFY <local> [key_7c759] Creating node
-2016-05-07 22:55:14 CFY <local> [master_db493.create] Sending task 'plugin.kubernetes.create'
-2016-05-07 22:55:14 CFY <local> [key_7c759.create] Sending task 'plugin.keypair.create'
+(mist-cloudify-example)user@user:~/unweb/mist-cloudify-example$ cfy local execute -w install
+2016-05-08 16:43:48 CFY <local> Starting 'install' workflow execution
+2016-05-08 16:43:48 CFY <local> [key_13e52] Creating node
+2016-05-08 16:43:48 CFY <local> [master_677f6] Creating node
+2016-05-08 16:43:48 CFY <local> [master_677f6.create] Sending task 'plugin.kubernetes.create'
 ...
+2016-05-08 16:52:43 CFY <local> [worker_7a12b.start] Task succeeded 'plugin.kubernetes.start'
+2016-05-08 16:52:44 CFY <local> 'install' workflow execution succeeded
+
 ```
 
 This will take a few minutes (eg 10 minutes on AWS Ireland).
