@@ -40,7 +40,7 @@ You need to add a cloud on your mist.io account. Login to the dashboard (https:/
 
 <br>
 
-You also need to add an ssh key for mist.io that will be deployed to the machines once they are created. Visit the Keys tab on your mist.io dashboard and generate or upload a key. Note the name, as it will be used on the mist.yaml input file.
+You also need to add an ssh key for mist.io that will be deployed to the machines once they are created. Visit the Keys tab on your mist.io dashboard and generate or upload a key. <br>Note the name, as it will be used on the mist.yaml input file.
 
 ![alt tag](images/cf.png)
 
@@ -49,7 +49,7 @@ You also need to add an ssh key for mist.io that will be deployed to the machine
 Now enter your account page (https://mist.io/account) and create a token on the API TOKENS tabs.
 
 
-The kubernetes example scripts are made for a coreos beta image (http://thecloudmarket.com/image/ami-4f4acd3c--coreos-beta-991-2-0) of AWS Ireland and will create c1.medium instances.
+The kubernetes example scripts are made for a coreos beta image (http://thecloudmarket.com/image/ami-4f4acd3c--coreos-beta-991-2-0) of AWS Ireland and will create c1.medium instances (http://aws.amazon.com/ec2/previous-generation/).
 There is also support for other linux distribution using the recommended [scripts from kubernetes repo](https://github.com/kubernetes/kubernetes/tree/master/docs/getting-started-guides/docker-multinode)
 
 Check the blueprint file inputs section and fill
