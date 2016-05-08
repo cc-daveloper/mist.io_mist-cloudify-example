@@ -34,7 +34,7 @@ python setup.py  develop
 
 
 You need to add a cloud on your mist.io account. Login to the dashboard (https://mist.kio) and click "ADD CLOUD". In our example we are adding AWS Ireland -instructions on how to add an AWS account can be found on http://docs.mist.io/article/17-adding-amazon-ec2.
-Note the ID of the cloud once it is added succesfully, as it will be used on the mist.yaml input file.
+<br>Note the ID of the cloud once it is added succesfully, as it will be used on the mist.yaml input file.
 
 ![alt tag](images/id.png)
 
