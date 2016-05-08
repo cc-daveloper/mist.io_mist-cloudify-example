@@ -9,16 +9,14 @@ Kubernetes cluster example consists of:
 
 Before you begin its recommended you familiarize yourself with
 [Cloudify Terminology](http://getcloudify.org/guide/3.1/reference-terminology.html).
-
 You also need [an account on mist.io](https://mist.io/).
 
-<br> This has been succesfully tested on Ubuntu 14.04 and python 2.7
+This has been succesfully tested on Ubuntu 14.04 and python 2.7
 
-**Note: <br>Documentation about the blueprints content is located inside the blueprint files themselves.
-<br>Presented here are only instructions on how to RUN the blueprints using the Cloudify CLI with Mist.io plugin .**
-<br><br>
-**From now on, all commands will assume that the working directory is the root of this repository.**
-## Instructions
+**Note: Documentation about the blueprints content is located inside the blueprint files themselves. Presented here are only instructions on how to RUN the blueprints using the Cloudify CLI with Mist.io plugin .**
+<br>
+**All commands will assume that the working directory is the root of this repository.**
+## Step 1: Install the software
 
 ```
 git clone https://github.com/mistio/mist-cloudify-example
@@ -32,10 +30,11 @@ cd cloudify-mist-plugin
 python setup.py  develop
 ```
 
-## Step 1: Initialize
+## Step 2: Initialize the environment
 
 
-You need to add a cloud on mist.io account.Click "ADD CLOUD". In our example we are adding AWS Ireland (Instructions on how to add an AWS account can be found on http://docs.mist.io/article/17-adding-amazon-ec2). Note the ID of the cloud once it is added succesfully, as it will be used on the mist.yaml input file.
+You need to add a cloud on your mist.io account. Login to the dashboard (https://mist.kio) and click "ADD CLOUD". In our example we are adding AWS Ireland -instructions on how to add an AWS account can be found on http://docs.mist.io/article/17-adding-amazon-ec2.
+Note the ID of the cloud once it is added succesfully, as it will be used on the mist.yaml input file.
 
 ![alt tag](images/id.png)
 
