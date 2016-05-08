@@ -155,6 +155,26 @@ To scale the cluster down edit the `inputs/remove_worker.yaml` file and specify 
 <br>
 `cfy local execute -w scale_cluster_down -p inputs/remove_worker.yaml `
 
+Example output would be something like:
+
+```
+(mist-cloudify-example)user@user:~/unweb/mist-cloudify-example$ cfy local execute -w scale_cluster_down -p inputs/remove_worker.yaml
+Processing Inputs Source: inputs/remove_worker.yaml
+2016-05-08 17:33:22 CFY <local> Starting 'scale_cluster_down' workflow execution
+...
+2016-05-08 17:33:33 LOG <local> INFO: Downscaling kubernetes cluster succeeded
+2016-05-08 17:33:33 CFY <local> 'scale_cluster_down' workflow execution succeeded
+```
+
+Make sure the nodes were removed from the  cluster
+
+```
+user@user:~/unweb/mist-cloudify-example$ ./kubectl --server=http://54.194.24.223:8080 get nodes
+NAME            LABELS                                 STATUS     AGE
+172.31.19.30    kubernetes.io/hostname=172.31.19.30    Ready      6m
+172.31.25.152   kubernetes.io/hostname=172.31.25.152   Ready   32m
+```
+
 ## Step 4: Uninstall
 
 To uninstall the kubernetes cluster and destroy all the machines we run the `uninstall` workflow : <br>
