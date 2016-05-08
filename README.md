@@ -49,7 +49,7 @@ You also need to add an ssh key for mist.io that will be deployed to the machine
 
 <br>
 
-Now enter your account page (https://mist.io/account) and create a token on the API TOKENS tabs.
+Now enter your [account page](https://mist.io/account) and create a token on the API TOKENS tabs.
 
 
 The kubernetes example scripts are made for a [coreos beta image](http://thecloudmarket.com/image/ami-4f4acd3c--coreos-beta-991-2-0) of AWS Ireland and will create [c1.medium instances](http://aws.amazon.com/ec2/previous-generation/).
@@ -74,7 +74,7 @@ This command (as the name suggests) initializes your working directory to work w
 The output would be something like this:
 
 ```
-(mist-cloudify-example)user@user:~/Desktop/mist-cloudify-example$ cfy local init -p mist-blueprint.yaml -i inputs/mist.yaml
+(mist-cloudify-example)user@user:~/mist-cloudify-example$ cfy local init -p mist-blueprint.yaml -i inputs/mist.yaml
 Processing Inputs Source: inputs/mist.yaml
 Initiated mist-blueprint.yaml
 If you make changes to the blueprint, run 'cfy local init -p mist-blueprint.yaml' again to apply them
@@ -92,7 +92,7 @@ This command will install the kubernetes master and a kubernetes minion.
 The output should be something like that: <br>
 
 ```
-(mist-cloudify-example)user@user:~/Desktop/mist-cloudify-example$ cfy local execute -w install
+(mist-cloudify-example)user@user:~/mist-cloudify-example$ cfy local execute -w install
 2016-05-07 22:55:14 CFY <local> Starting 'install' workflow execution
 2016-05-07 22:55:14 CFY <local> [master_db493] Creating node
 2016-05-07 22:55:14 CFY <local> [key_7c759] Creating node
@@ -101,10 +101,17 @@ The output should be something like that: <br>
 ...
 ```
 
-You can visit [mist.io machines page](https://mist.io/#/machines) to see the machines GigaDemoMaster and GigaDemoFirstWorker have been created and click on them to view the logs if the scripts are running.
+This will take a few minutes (eg 10 minutes on AWS Ireland).
+
+You can visit [mist.io machines page](https://mist.io/#/machines) to see the machines GigaDemoMaster and GigaDemoFirstWorker (if you used the default names on inputs/mist.yaml) have been created and click on them to view the logs if the scripts are running.
+
+![alt tag](images/machines.png)
 
 <br>
 You can view the public ip of the kubernetes master on Basic Info  section of the master machine page.
+
+![alt tag](images/machine.png)
+
 
 ## Step 3: Scale cluster
 To scale the cluster up  first edit the `inputs/new_worker.yaml` file with the proper inputs. Edit the `delta` parameter to specify the number of machines to be added to the cluster. Other input fields are the same as the inputs given on initialization. Then run :
