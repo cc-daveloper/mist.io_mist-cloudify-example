@@ -1,4 +1,4 @@
-mist_uri: http://mist.io
+mist_uri: https://mist.io
 ssh_user: root
 private_key_path: id-rsa
 api_token: 73f77ee159832226c5e5904379871382e6f1d1f92e4cbe9d1da0f11455423907
@@ -13,8 +13,6 @@ worker_name: GigaDemoFirstWorker
 master_name: GigaDemoMaster
 key_external_resource: true
 worker_external_resource: false
-worker_external_resource_id: 'i-ebb8c563'
 worker_configured: false
 master_external_resource: false
-master_external_resource_id: 'i-3fb9c4b7'
 master_configured: false
