@@ -49,7 +49,7 @@ You also need to add an ssh key for mist.io that will be deployed to the machine
 Now enter your [account page](https://mist.io/account) and create a token on the API TOKENS tabs.
 
 
-The kubernetes example scripts are made for a [coreos beta image](http://thecloudmarket.com/image/ami-4f4acd3c--coreos-beta-991-2-0) of AWS Ireland and will create [c1.medium instances](http://aws.amazon.com/ec2/previous-generation/).
+The kubernetes example scripts are made for a [coreos beta image](http://thecloudmarket.com/image/ami-4f4acd3c--coreos-beta-991-2-0) of AWS Ireland and will create [m3.xlarge instances](https://aws.amazon.com/ec2/instance-types/).
 <br>There is also support for other linux distribution using the recommended [scripts from kubernetes repo](https://github.com/kubernetes/kubernetes/tree/master/docs/getting-started-guides/docker-multinode)
 
 Check the blueprint file inputs section and fill

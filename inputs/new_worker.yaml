@@ -2,7 +2,7 @@ key_name: demokey
 cloud_id: 09fb6b638df74f83914cc68af953ebcd
 image_id: ami-4f4acd3c
 coreos: true
-size_id: c1.medium
+size_id: m3.xlarge
 location_id: '0'
 monitoring: false
 name: GigaDemoNewWorker
