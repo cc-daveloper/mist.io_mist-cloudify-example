@@ -3,11 +3,11 @@
 # on an mist.io cloud environment.
 ###########################################################
 
-tosca_definitions_version: cloudify_dsl_1_1
+tosca_definitions_version: cloudify_dsl_1_2
 
 imports:
   - http://www.getcloudify.org/spec/cloudify/3.3m5/types.yaml
-  - https://raw.githubusercontent.com/mistio/cloudify-mist-plugin/master/plugin.yaml
+  - http://localhost:8000/plugin.yaml
   - types/nodecellar.yaml
   - types/mist-types.yaml
 
@@ -44,9 +44,6 @@ inputs:
     default: ''
   cloud_id:
     description: The mist.io cloud id
-    default: ''
-  cloud_name:
-    description: The mist.io cloud name
     default: ''
   image_id:
     description: The image id
@@ -123,17 +120,16 @@ node_templates:
       use_external_resource: { get_input: master_external_resource }
       resource_id: { get_input: master_external_resource_id }
       configured: { get_input: master_configured }
+      coreos: {get_input: coreos}
       parameters:
-        key_name: { get_input: key_name }
+        key_id: { get_input: key_name }
         cloud_id: { get_input: cloud_id }
-        cloud_name: { get_input: cloud_name }
         image_id: { get_input: image_id }
         size_id: { get_input: size_id }
         location_id: { get_input: location_id }
-        name: { get_input: master_name }
+        machine_name: { get_input: master_name }
         monitoring: { get_input: monitoring }
         networks: {get_input: networks}
-        coreos: {get_input: coreos}
 
       mist_config:
         api_token: { get_input: api_token }
@@ -151,17 +147,16 @@ node_templates:
       use_external_resource: { get_input: worker_external_resource }
       resource_id: { get_input: worker_external_resource_id }
       configured: { get_input: worker_configured }
+      coreos: {get_input: coreos}
       parameters:
         key_name: { get_input: key_name }
         cloud_id: { get_input: cloud_id }
-        cloud_name: { get_input: cloud_name }
         image_id: { get_input: image_id }
         size_id: { get_input: size_id }
         location_id: { get_input: location_id }
-        name: { get_input: worker_name }
+        machine_name: { get_input: worker_name }
         monitoring: { get_input: monitoring }
         networks: {get_input: networks}
-        coreos: {get_input: coreos}
       mist_config:
         api_token: { get_input: api_token }
         username: { get_input: username }

@@ -1,7 +1,7 @@
-mist_uri: https://mist.io
+mist_uri: http://172.17.0.1/
 ssh_user: root
 private_key_path: id-rsa
-api_token: 73f77ee159832226c5e5904379871382e6f1d1f92e4cbe9d1da0f11455423907
+api_token: 73f77ee159832226c5e59d4379871382e6f1d1f92e4cbe9d1da0f11455423907
 key_name: demokey
 cloud_id: 09fb6b638df74f83914cc68af953ebcd
 image_id: ami-4f4acd3c
