@@ -107,7 +107,7 @@ node_templates:
 
 
   simple:
-    type: nodecellar.nodes.MonitoredServer
+    type: cloudify.mist.nodes.Server
     properties:
       cloudify_agent:
         user: { get_input: ssh_user }
