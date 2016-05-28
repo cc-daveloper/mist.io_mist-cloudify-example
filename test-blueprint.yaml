@@ -107,7 +107,7 @@ node_templates:
 
 
   simple:
-    type: nodecellar.nodes.MonitoredServer
+    type: nodecellar.nodes.Simple
     properties:
       install_agent:
         default: false

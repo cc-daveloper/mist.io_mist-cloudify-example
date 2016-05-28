@@ -18,3 +18,8 @@ node_types:
     properties:
       install_agent:
         default: false
+  nodecellar.nodes.Simple:
+    derived_from: cloudify.mist.nodes.Server
+    properties:
+      install_agent:
+        default: false
