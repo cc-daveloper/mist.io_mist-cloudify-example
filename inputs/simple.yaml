@@ -1,0 +1,14 @@
+mist_uri: http://172.17.0.1/
+ssh_user: ubuntu
+private_key_path: id-rsa
+key: ba28787d7b9e46fda2b74a2e853da32e
+cloud_id: 48447c25b2294323bb4988eb9bd896ba
+image_id: ami-4d1fd123
+size_id: t2.nano
+location_id: '0'
+monitoring: false
+master_name: SimpleBP-kill
+key_external_resource: true
+master_external_resource: false
+master_external_resource_id: 'i-3fb9c4b7'
+api_token: 2c002600fdd4af7393abb00e4db59e5cd9f79e06ffb391a5e8bdd53410d9881b
