@@ -107,8 +107,10 @@ node_templates:
 
 
   simple:
-    type: cloudify.mist.nodes.Server
+    type: nodecellar.nodes.MonitoredServer
     properties:
+      install_agent:
+        default: false
       cloudify_agent:
         user: { get_input: ssh_user }
         key: { get_input: private_key_path }
