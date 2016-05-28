@@ -3,7 +3,7 @@ tosca_definitions_version: cloudify_dsl_1_2
 imports:
   - http://www.getcloudify.org/spec/cloudify/3.3m5/types.yaml
   - http://raw.githubusercontent.com/mistio/cloudify-mist-plugin/simplify/plugin.yaml
-  - types/nodecellar.yaml
+  # - types/nodecellar.yaml
   - types/mist-types.yaml
 
 
@@ -109,8 +109,6 @@ node_templates:
   simple:
     type: nodecellar.nodes.Simple
     properties:
-      install_agent:
-        default: false
       cloudify_agent:
         user: { get_input: ssh_user }
         key: { get_input: private_key_path }
