@@ -90,6 +90,9 @@ inputs:
   networks:
     description: The network ids that will be used by the machine
     default: []
+  associate_floating_ip:
+    description: Associate floating ip to an Openstack instance
+    default: true
 node_templates:
   key:
     type: nodecellar.nodes.MonitoredServerKey
@@ -130,6 +133,7 @@ node_templates:
         name: { get_input: master_name }
         monitoring: { get_input: monitoring }
         networks: {get_input: networks}
+        associate_floating_ip: {get_input: associate_floating_ip}
 
       mist_config:
         api_token: { get_input: api_token }
@@ -157,6 +161,7 @@ node_templates:
         name: { get_input: worker_name }
         monitoring: { get_input: monitoring }
         networks: {get_input: networks}
+        associate_floating_ip: {get_input: associate_floating_ip}
       mist_config:
         api_token: { get_input: api_token }
         username: { get_input: username }
@@ -177,7 +182,7 @@ workflows:
         default: false
       external_resource_id:
         default: ''
-      key_name:
+      key:
         description: this parameter is mandatory
       cloud_id:
         description: this parameter is mandatory
@@ -220,7 +225,7 @@ workflows:
   #     use_external_resource: { get_input: node_external_resource }
   #     resource_id: { get_input: node_external_resource_id }
   #     parameters:
-  #       key_name: { get_input: key_name }
+  #       key: { get_input: key }
   #       cloud_id: { get_input: cloud_id }
   #       cloud_name: { get_input: cloud_name }
   #       image_id: { get_input: image_id }
