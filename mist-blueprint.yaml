@@ -21,8 +21,20 @@ imports:
 #####################################################################################
 
 inputs:
-  mist_uri:
-    description: The mist custom uri
+  cloud_id:
+    description: Select cloud
+    default: ''
+  image_id:
+    description: Select image
+    default: ''
+  size_id:
+    description: Select size
+    default: ''
+  location_id:
+    description: Select location
+    default: ''
+  key:
+    description: Select key
     default: ''
   ssh_user:
     description: The ssh user on the machine
@@ -30,6 +42,9 @@ inputs:
   private_key_path:
     description: The local path where private key is saved
     default: ''
+  mist_uri:
+    description: The mist custom uri
+    default: 'https://mist.io'
   username:
     description: Mist.io username
     default: ''
@@ -39,24 +54,9 @@ inputs:
   api_token:
     description: Mist.io api token
     default: ''
-  key:
-    description: The id of the private key
-    default: ''
-  cloud_id:
-    description: The mist.io cloud id
-    default: ''
-  image_id:
-    description: The image id
-    default: ''
   coreos:
     description: True if the image is coreos
     default: false
-  size_id:
-    description: The size id
-    default: ''
-  location_id:
-    description: The location id
-    default: ''
   monitoring:
     description: Enable mist monitoring
     default: false
